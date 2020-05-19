@@ -1,0 +1,104 @@
+html {
+    margin: 0;
+}
+
+body {
+    margin:0;
+}
+
+#app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+}
+
+.caption {
+    font-size:12px;
+}
+.overflow-y-hidden {
+    overflow-y:hidden;
+}
+
+table {
+    width:100%;
+    border-collapse: collapse;
+}
+h3 {
+    margin:5px 0;
+}
+hr {
+    margin:20px 0;
+}
+
+#listener {
+    width:100%;
+    padding:10px;
+    box-sizing:border-box;
+    text-align: center;
+    background-color:#2f2f71;
+    color:white;
+}
+
+.clickable {
+    cursor:pointer;
+}
+.full_width {
+    width:100%;
+}
+
+.shadow {
+    box-shadow:0 0 5px black;
+}
+
+.icon {
+    width:100px;
+    height:100px;
+    border-radius: 50%;
+}
+
+.small-icon {
+    width:30px;
+    height:30px;
+    border-radius: 50%;
+}
+
+.rating-worst {
+    background-color:red;
+}
+.rating-worse {
+    background-color:orange;
+}
+.rating-better {
+    background-color:#cecd18;
+}
+.rating-best {
+    background-color:rgb(102, 190, 102);
+}
+
+
+.logcontainer {
+    width: 100%;
+    padding:15px 10px;
+    box-sizing:border-box;
+    display:flex;
+}
+.logcolumn {
+    flex:1;
+}
+.log {
+    padding:10px;
+    border: 1px solid #dadada88;
+    text-align: center;
+}
+
+.record {
+    display:flex;
+    align-items:center;
+    margin-bottom:5px;
+}
+.record span {
+    flex:1;
+    margin-right:10px;
+}

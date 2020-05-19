@@ -1,0 +1,9 @@
+Steps
+1. Install independencies from package.json: npm Install
+2. Run start script from package.json: npm start 
+
+
+Questions for Ryan/Chris
+- How did select all Node modules?
+- Source for graphics?
+- Manually or auto generate package.json?
