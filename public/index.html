@@ -1,22 +1,172 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Collaborate-IP version 2.0 </title>
-        <link rel="stylesheet" href="css/index.css">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
-        <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
-        <script src = "js/index.js" defer></script>
-    </head>
-    <body>
-        Test Hi Sam
-        <!-- ignore for now get the node server up 
-        <div id="app">
-         
 
-        </div>
-        --> 
-    </body>
+<head>
+    <title>Collaborate-IP</title>
+
+    <!-- Vuetify -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <!-- -<link rel="stylesheet" href="css/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="js/index.js" defer></script>
+
+    <!-- ASK Ryan: Why do you need to do this, rather than use require, that doesn't work despite having npm i axios?-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <v-app>
+            <!-- Navigation Bar -->
+            <v-card class="overflow-hidden">
+                <v-app-bar absolute color="#6A76AB" dark shrink-on-scroll prominent
+                    src="http://tips.slaw.ca/wp-content/uploads/2013/03/collaboration-300x225.jpg" fade-img-on-scroll
+                    scroll-target="#scrolling-techniques-3">
+                    <template v-slot:img="{ props }">
+                        <v-img v-bind="props" gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"></v-img>
+                    </template>
+
+                    <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
+                    <v-toolbar-title>COVID-19: Let's Collaborate!</v-toolbar-title>
+
+                    <v-spacer></v-spacer>
+
+                    <v-btn icon>
+                        <v-icon>mdi-heart</v-icon>
+                    </v-btn>
+
+                    <v-btn icon>
+                        <v-icon>mdi-dots-vertical</v-icon>
+                    </v-btn>
+
+                    <template v-slot:extension>
+                        <v-tabs align-with-title>
+                            <v-tab>The Problem: Jointly Developed IP</v-tab>
+                            <v-tab>About</v-tab>
+                        </v-tabs>
+                    </template>
+                </v-app-bar>
+
+                <v-sheet id="scrolling-techniques-3" class="overflow-y-auto" max-height="800">
+                    <v-container style="height: 250px;">
+                        test1
+                    </v-container>
+                    <v-container>
+                        <v-content>
+                            <!-- Main Content for Collaborate -->
+
+
+                            <!-- Main Content -->
+                            <v-container>
+                                <v-content>
+                                    <v-card dark color="blue">
+                                        <v-card-title>The Problem with IP Collaboration</v-card-title>
+                                        <v-card-text>
+                                            Joint ownership under Canadian copyright laws does not exist. You want to
+                                            collaborate on a
+                                            joint-development project to tackle COVID-19 and other social projects for
+                                            social good, but
+                                            who owns what you both create? We propose a simple approach:
+                                            <ul>
+                                                <li>We'll ask you a few simple questions</li>
+                                                <li>We'll automatically generates Collaboration Agreement that clearly
+                                                    sets out who owns
+                                                    what (no more disputes!)</li>
+                                                <li>We'll provide you with a simple framework for how you can
+                                                    collaobrate</li>
+                                                <li>We'll even automatically Set Up GitHUB Account, designed for
+                                                    collaboration and
+                                                    aligned with our agreements.t</li>
+                                            </ul>
+                                            <p></p>
+                                            <p>
+                                                <span style="font-weight: bold; text-decoration: underline">That's
+                                                    it!</span>
+                                            </p>
+                                        </v-card-text>
+                                    </v-card>
+                                                        <!-- GITHUB will contain 
+                                        - License File
+                                        - a README.MD mark-down
+                                        - Folder for Background IP of Party A
+                                        - Folder for Background IP of Party B
+                                        - Folder for Forground IP
+                                        - Copy of Template Agreements
+                                    -->
+                                    <p></p>
+
+                                    <v-card dark color="orange">
+                                        <v-card-title>Step 1: Simple Questions</v-card-title>
+                                        <!-- reminder: you can't use {{ }} within attributes 
+                                        But Vue.js actually supports the full power of JavaScript expressions inside all data bindings:
+                                        see: https://vuejs.org/v2/guide/syntax.html#Using-JavaScript-Expressions
+                                        -->
+                                        <v-switch v-model="UserResponse.OpenSource"
+                                            :label="'Open Source Project: '  + UserResponse.OpenSource.toString()">
+                                        </v-switch>
+                                        <v-switch v-model="UserResponse.BackgroundIP"
+                                            :label="'Each Party Bringing Background IP: ' + UserResponse.BackgroundIP.toString()">
+                                        </v-switch>
+                                    </v-card>
+
+                                    <p></p>
+
+                                    <v-card dark color="pink">
+                                        <v-card-title>Step 2: The Agreements</v-card-title>
+                                        <v-card-text>Download these agreements and use them.</v-card-text>
+                                        <v-container>
+                                            <v-btn color="info">Download Collaboration Agreement</v-btn>
+                                        </v-container>
+                                        <v-container>
+                                            <v-btn color="info">Download Open Source License</v-btn>
+                                        </v-container>
+                                    </v-card>
+
+                                    <p></p>
+
+                                    <v-card dark color="green">
+                                        <v-card-title>Step 3: Automatically Set Up GitHub</v-card-title>
+                                        <form>
+                                            <v-text-field v-model="UserResponse.GitHubUserName"
+                                                :error-messages="nameErrors" :counter="10" label="GitHub User Name"
+                                                required></v-text-field>
+                                            <v-text-field v-model="UserResponse.GitHubPassword"
+                                                :error-messages="emailErrors" label="GitHub Password" required>
+                                            </v-text-field>
+                                            <v-text-field v-model="UserResponse.GitHubFolderName"
+                                                :error-messages="emailErrors" label="GitHub Folder Name" required>
+                                            </v-text-field>
+                                            <v-checkbox v-model="UserResponse.GitHubConsent"
+                                                :error-messages="checkboxErrors"
+                                                label="Do you agree to let us set up your GitHub?" required>
+                                            </v-checkbox>
+
+                                            <v-btn class="mr-4" @click="submit">submit</v-btn>
+                                            <v-btn @click="clear">clear</v-btn>
+                                        </form>
+                                    </v-card>
+                                </v-content>
+                            </v-container>
+                        </v-content>
+                    </v-container>
+                </v-sheet>
+            </v-card>
+
+        </v-app>
+    </div>
+</body>
+
 </html>

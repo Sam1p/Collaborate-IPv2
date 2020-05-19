@@ -1,98 +1,78 @@
-Vue.component('rating', {
-    template: '#rating-template',
-    props : ['rating']
-});
-Vue.component('news', {
-    template: '#news-template',
-    props : ['heading', 'list']
-});
-Vue.component('suggestions', {
-    template: '#suggestions-template',
-    props : ['data']
-});
-Vue.component('covid', {
-    template: '#covid-template',
-    props : ['data'],
-    methods : {
-        severityToRating : function(severity) {
-            if (severity === "LOW") return 0.9;
-            if (severity === "MODERATE") return 0.4;
-            return 0.2;
-        }
-    }
-});
-Vue.component('product', {
-    template: '#product-template',
-    props : ['data'],
-    methods : {
-        stockToRating : function(stock) {
-            if (stock === "In Stock.") return 1;
-            return 0;
-        }
-    }
-});
-Vue.component('covidnews', {
-    template: '#covidnews-template',
-    props : ['data']
-});
-Vue.component('airlinenews', {
-    template: '#airlinenews-template',
-    props : ['data']
-});
-Vue.component('whonews', {
-    template: '#whonews-template',
-    props : ['data']
-});
-Vue.component('res-table', {
-    template: '#res-table-template',
-    props : ['list'],
-    data : function() {
-        return {
-            columns : []
-        };
-    },
-    mounted : function() {
-        this.updateColumns();
-        window.onresize = () => {
-            this.updateColumns();
-        };
-    },
-    watch : {
-        list : function(new_v, old_v) {
-            this.updateColumns();
-        }
-    },
-    methods : {
-        updateColumns : function() {
-            if (document.body.clientWidth <= 600 || this.list.length <= 1) this.columns = [[]];
-            else if (document.body.clientWidth <= 1300 || this.list.length <= 2) this.columns = [[], []];
-            else this.columns = [[], [], []];
+// console.log ("Requiring Axios");
+// Can't get axios
+// const axios = require('axios'); or const axios = require('axios').default doesn't work
+//
+// try <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-            for(var i=0; i<this.list.length; i+=1) {
-                var col = this.columns[i % this.columns.length];
-                col.push(this.list[i]);
-            }
-        }
-    }
-});
+console.log("Vue Starting Instance");
+
 
 var app = new Vue({
-    el: "#app", 
-    data: () => ({
-        UserResponse: {
-          OpenSource: true,
-          BackgroundIP: true,
-          GitHubUserName: "foo",
-          GitHubPassword: "bar",
-          GitHubFolderName: "Collaborate1234",
-          GitHubConsent: false
-        },
-        axiosPostBody: {
-          name: ""
+    el: '#app',
+    vuetify: new Vuetify(),
+    data: function () {
+        return {
+            seen: false,
+            UserResponse: {
+                OpenSource: true,
+                BackgroundIP: true,
+                GitHubUserName: 'foo',
+                GitHubPassword: 'bar',
+                GitHubFolderName: 'Collaborate1234',
+                GitHubConsent: false
+            }
         }
-    }),
-    methods : {
-        
+    },
+    methods: {
+        submit() {
+            console.log("created starting...");
+
+            /* https://masteringjs.io/tutorials/axios/basic_auth 
+            (1) Tools: https://httpbin.org/basic-auth/foo/bar can be used test simple HTTP request/resp
+            to test Basic Authentication and other API request 
+            
+            Conclusion of Test
+            - auth field works; therefore something with GitHub
+            - but authentication works on Postman though
+            - COULD it be a cross-origin issue?
+              Unlikely: Hithub 3 says API supports CORS
+            - COULD it be you're making call from http to https? */
+
+            axios
+                .get("https://api.github.com/user/repos", {
+                    auth: {
+                        username: this.UserResponse.GitHubUserName,
+                        password: this.UserResponse.GitHubPassword
+                    },
+                    headers: {
+                        'User-Agent': 'PostmanRuntime/7.24.1'
+                    }
+                })
+                .then(res => {
+                    console.log("res.data: " + JSON.stringify(res.data));
+                })
+                .catch(err => console.log(err));
+
+            /*this.axiosPostBody += this.GitHubFolderName;
+            // Need to get JSONIFY.. get it to JSON.
+            console.log(this.axiosPostBody);
+            console.log (JSON.stringify(this.axiosPostBody));
+            axios
+              .post(`https://api.github.com/user/repos`, {
+                body: this.axiosPostBody
+              })
+              .then(response => {})
+              .catch(e => {
+                this.errors.push(e);
+              });*/
+
+            console.log("done post...");
+        },
+        clear() {
+            this.UserResponse.GitHubUserName = "";
+            this.UserResponse.GitHubPassword = "";
+            this.UserResponse.GitHubFolderName = "";
+            this.UserResponse.GitHubConsent = false;
         }
     }
 });
