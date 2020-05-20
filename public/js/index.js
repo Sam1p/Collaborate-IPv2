@@ -18,14 +18,22 @@ var app = new Vue({
                 BackgroundIP: true,
                 GitHubUserName: 'foo',
                 GitHubPassword: 'bar',
-                GitHubFolderName: 'Collaborate1234',
+                GitHubFolderName: 'Tempx',
                 GitHubConsent: false
+            },
+            PostBody: {
+                GitHubUserName: 'foo',
+                GitHubPassword: 'bar',
+                GitHubFolderName: 'Tempx',
+                GitHubInstruction: 'CreateFolder'
             }
         }
     },
     methods: {
         submit() {
             console.log("created starting...");
+
+            
 
             /* https://masteringjs.io/tutorials/axios/basic_auth 
             (1) Tools: https://httpbin.org/basic-auth/foo/bar can be used test simple HTTP request/resp
@@ -38,7 +46,11 @@ var app = new Vue({
               Unlikely: Hithub 3 says API supports CORS
             - COULD it be you're making call from http to https? */
 
-            axios
+
+            // localhost/api/sfdfdi
+            // ... don't go with https just go with "/user/repos""
+            // "
+           /* axios
                 .get("https://api.github.com/user/repos", {
                     auth: {
                         username: this.UserResponse.GitHubUserName,
@@ -51,22 +63,29 @@ var app = new Vue({
                 .then(res => {
                     console.log("res.data: " + JSON.stringify(res.data));
                 })
-                .catch(err => console.log(err));
+                .catch(err => console.log(err));*/
 
             /*this.axiosPostBody += this.GitHubFolderName;
             // Need to get JSONIFY.. get it to JSON.
-            console.log(this.axiosPostBody);
-            console.log (JSON.stringify(this.axiosPostBody));
+            console.log(this.axiosPostBody);*/
+            console.log ("About to send to localhost/api/post");
+            console.log (JSON.stringify(this.PostBody));
             axios
-              .post(`https://api.github.com/user/repos`, {
-                body: this.axiosPostBody
+              .post(`/api/PostGitHub`, {
+                    GitHubUserName : this.UserResponse.GitHubUserName,
+                    GitHubPassword : this.UserResponse.GitHubPassword,
+                    GitHubFolderName : this.UserResponse.GitHubFolderName,
+                    GitHubInstruction : 'OpenSource'
               })
-              .then(response => {})
+              .then(response => {
+                  console.log ("POST DONE!");
+              })
               .catch(e => {
-                this.errors.push(e);
-              });*/
-
-            console.log("done post...");
+                alert("Incorrect Credentials!");
+                console.log (e);
+              });
+        
+            console.log("method complete..");
         },
         clear() {
             this.UserResponse.GitHubUserName = "";
