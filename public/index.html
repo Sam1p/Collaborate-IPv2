@@ -25,6 +25,7 @@ Package:
 - Joint_Dev_IP
 
 -->
+
 <head>
     <title>Collaborate-IP</title>
 
@@ -56,7 +57,8 @@ Package:
 
                     <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-                    <v-toolbar-title>COVID-19: Let's Collaborate!</v-toolbar-title>
+                    <v-toolbar-title>Simply Collaborate: Keeping IP Ownership in Collaborations Simple
+                    </v-toolbar-title>
 
                     <v-spacer></v-spacer>
 
@@ -70,7 +72,7 @@ Package:
 
                     <template v-slot:extension>
                         <v-tabs align-with-title>
-                            <v-tab>The Problem: Jointly Developed IP</v-tab>
+                            <v-tab>The Problem: Jointly "owned" IP</v-tab>
                             <v-tab>About</v-tab>
                         </v-tabs>
                     </template>
@@ -87,23 +89,25 @@ Package:
                             <v-container>
                                 <v-content>
                                     <v-card dark color="blue">
-                                        <v-card-title>The Problem with IP Collaboration</v-card-title>
+                                        <v-card-title>The Problem with "Jointly Owned" IP</v-card-title>
                                         <v-card-text>
-                                            Joint ownership under Canadian copyright laws does not exist. You want to
-                                            collaborate on a
-                                            joint-development project to tackle COVID-19 and other social projects for
-                                            social good, but
-                                            who owns what you both create? We propose a simple approach:
+                                            <p></p>Joint collaboration is essential to innovation, particularly when
+                                            enginuity and innovation is required to tackle problems such as COVID-19. In
+                                            our experience, many organizations simply agree they will "jointly own" the
+                                            work products. However, did you know there is significant ambiguity what "joint
+                                            ownership" means under the laws of Canada and other jurisdictions? For example, do you always need the approval of the other person in order to use, sell, make available, distribute or market the work product?  You might...
+                                            </p>
+                                            For organizations that do not have significant legal resource, we propose a very simple,
+                                            2-option approach:
+                                            </p>
                                             <ul>
-                                                <li>We'll ask you a few simple questions</li>
-                                                <li>We'll automatically generates Collaboration Agreement that clearly
-                                                    sets out who owns
-                                                    what (no more disputes!)</li>
-                                                <li>We'll provide you with a simple framework for how you can
-                                                    collaobrate</li>
-                                                <li>We'll even automatically Set Up GitHUB Account, designed for
-                                                    collaboration and
-                                                    aligned with our agreements.t</li>
+                                                <li>Tell us if you're collaborating to develop an open source project or
+                                                    not.</li>
+                                                <li>We'll provide you with a Collaboration Agreement that is fair and equitable. One party is provided ownership rights, and the other party very broad, perpetual license rights that are almost tantamount to ownership. For non-open source projects where each person brings IP to the table, we'll clearly set out that each party will own the IP that it brings to the table.</li>
+                                                <li>We'll provide you with a simple charter document to remind you how this works.</li>
+                                                <li>We'll even automatically set up GitHUB Account, designed for
+                                                    collaboration and is specifically
+                                                    aligned with the Collaboration Agreements.</li>
                                             </ul>
                                             <p></p>
                                             <p>
@@ -112,7 +116,7 @@ Package:
                                             </p>
                                         </v-card-text>
                                     </v-card>
-                                   
+
                                     <p></p>
 
                                     <v-card dark color="orange">
@@ -121,24 +125,21 @@ Package:
                                         But Vue.js actually supports the full power of JavaScript expressions inside all data bindings:
                                         see: https://vuejs.org/v2/guide/syntax.html#Using-JavaScript-Expressions
                                         -->
-                                        <v-switch v-model="UserResponse.OpenSource"
-                                            :label="'Open Source Project: '  + UserResponse.OpenSource.toString()">
-                                        </v-switch>
-                                        <v-switch v-model="UserResponse.BackgroundIP"
-                                            :label="'Each Party Bringing Background IP: ' + UserResponse.BackgroundIP.toString()">
-                                        </v-switch>
+                                        <v-card-text>What type of project are you collaborating to build?</v-card-text>
+                                        <v-radio-group v-model="UserResponse.OpenSource">
+                                            <v-radio key="1" label="An Open Source Project" :value="true"></v-radio>
+                                            <v-radio key="2" label="A Non-Open Source Project" :value="false">
+                                            </v-radio>
+                                        </v-radio-group>
                                     </v-card>
 
                                     <p></p>
 
                                     <v-card dark color="pink">
-                                        <v-card-title>Step 2: The Agreements</v-card-title>
-                                        <v-card-text>Download these agreements and use them.</v-card-text>
+                                        <v-card-title>Step 2: The Collaboration Agreement</v-card-title>
+                                        <v-card-text>Note: Please review the Collaboration Agreement carefully.  There are placeholder notes that you will need to populate.</v-card-text>
                                         <v-container>
-                                            <v-btn color="info">Download Collaboration Agreement</v-btn>
-                                        </v-container>
-                                        <v-container>
-                                            <v-btn color="info">Download Open Source License</v-btn>
+                                            <v-btn color="info" href="/documents/CollaborationAgreement.docx">Download, Complete and Sign This Collaboration Agreement</v-btn>
                                         </v-container>
                                     </v-card>
 
@@ -147,17 +148,15 @@ Package:
                                     <v-card dark color="green">
                                         <v-card-title>Step 3: Automatically Set Up GitHub</v-card-title>
                                         <form>
-                                            <v-text-field v-model="UserResponse.GitHubUserName"
-                                                :error-messages="nameErrors" :counter="10" label="GitHub User Name"
-                                                required></v-text-field>
-                                            <v-text-field v-model="UserResponse.GitHubPassword"
-                                                :error-messages="emailErrors" label="GitHub Password" required>
+                                            <v-text-field v-model="UserResponse.GitHubUserName" :counter="10"
+                                                label="GitHub User Name" required></v-text-field>
+                                            <v-text-field v-model="UserResponse.GitHubPassword" label="GitHub Password"
+                                                required type="password">
                                             </v-text-field>
                                             <v-text-field v-model="UserResponse.GitHubFolderName"
-                                                :error-messages="emailErrors" label="GitHub Folder Name" required>
+                                                label="GitHub Folder Name" required>
                                             </v-text-field>
                                             <v-checkbox v-model="UserResponse.GitHubConsent"
-                                                :error-messages="checkboxErrors"
                                                 label="Do you agree to let us set up your GitHub?" required>
                                             </v-checkbox>
 

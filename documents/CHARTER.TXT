@@ -1,0 +1,13 @@
+Project Charter - Simple IP Principles to Keep in Mind
+------------------------------------------------------
+
+1.  Everything in this GitHub repository is governed by the Collaboration Agreement signed by the Parties
+on [X], 2020
+2.  Everything in "Party_A_IP" belongs to Party A, as desribed in the Collaboration Agreement
+3.  Everything in "Party_B_IP" belongs to Party B, as described in the Collaboration Agreement
+4.  Everything else is owned by Party A, but Party B is entitled to a broad license (tantamount to ownership), again,
+as described in the Collaboration Agreement
+
+That's it!
+
+[Note to User: Feel free to add as appropriate.]

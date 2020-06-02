@@ -37,10 +37,9 @@ https://www.freeformatter.com/base64-encoder.html
 app.post('/api/PostGitHub', async (req, res) => {
     console.log("Received API call: ", JSON.stringify(req.body));
     console.log(req.body);
-    console.log("Going to perform a GET to Create Folder or File");
+    console.log("Going to perform a POST to Create Folder or File");
 
     // folder creation - same, for open source or proprietary
-
 
     GitHubFolderCreateRepo(req.body, function (error, response) {
         if (error) {
@@ -68,6 +67,10 @@ app.post('/api/PostGitHub', async (req, res) => {
             var FileContents = data.toString();
             var FileContentsBase64 = Buffer.from(FileContents).toString('base64');
 
+            var dataCharterOpenSource = fse.readFileSync(__dirname + '/documents/CHARTER_OPENSOURCE.TXT');
+            var FileContentsCharterOpenSource = dataCharterOpenSource.toString();
+            var FileContentsBase64CharterOpenSource = Buffer.from(FileContentsCharterOpenSource).toString('base64');
+
             GitHubCreateFile(req.body, 'LICENSE.TXT', FileContentsBase64, function (error, response) {
                 if (error) {
                     console.log(error);
@@ -83,8 +86,8 @@ app.post('/api/PostGitHub', async (req, res) => {
                 console.log(responseBody);
                 console.log("GitHubFolderCreateFile Seems Successful.");
 
-                // Create Folder A
-                GitHubCreateFile(req.body, 'PARTY_A_IP/LICENSE.TXT', FileContentsBase64, function (error, response) {
+                // Create Open Source Charter
+                GitHubCreateFile(req.body, 'CHARTER_OPENSOURCE.TXT', FileContentsBase64CharterOpenSource, function (error, response) {
                     if (error) {
                         console.log(error);
                         return res.status(400).send(error);
@@ -96,21 +99,76 @@ app.post('/api/PostGitHub', async (req, res) => {
                     }
 
                     console.log(responseBody);
-                    console.log("GitHubFolderCreateFile Seems Successful.");
+                    console.log("GitHub Create CHARTER_OPENSOURCE.TXT Seems Successful.");
                     res.send(responseBody);
                 });
-                // res.send(responseBody);
             });
-
-
-
-            // Create FOlder B
 
         } else { // Non-Open Source
             console.log("Performing Proprietary File Structure Creation");
-        }
+            var data = fse.readFileSync(__dirname + '/documents/CHARTER.TXT');
+            var FileContents = data.toString();
+            var FileContentsBase64 = Buffer.from(FileContents).toString('base64');
 
-        // res.send(responseBody);
+            var dataPartyA = fse.readFileSync(__dirname + '/documents/Party_A_IP.TXT');
+            var FileContentsPartyA = dataPartyA.toString();
+            var FileContentsBase64PartyA = Buffer.from(FileContentsPartyA).toString('base64');
+
+            var dataPartyB = fse.readFileSync(__dirname + '/documents/Party_B_IP.TXT');
+            var FileContentsPartyB = dataPartyB.toString();
+            var FileContentsBase64PartyB = Buffer.from(FileContentsPartyB).toString('base64');
+
+            GitHubCreateFile(req.body, 'CHARTER.TXT', FileContentsBase64, function (error, response) {
+                if (error) {
+                    console.log(error);
+                    return res.status(400).send(error);
+                }
+                var responseBody = JSON.parse(response.body);
+                if (responseBody.message === "Bad credentials") {
+                    console.log(responseBody);
+                    return res.status(400).send(responseBody);
+                }
+
+                console.log(responseBody);
+                console.log("GitHub Creating CHARTER.TXT seems Successful.");
+
+                // Create Party A Folder
+                GitHubCreateFile(req.body, 'PARTY_A_IP/PARTY_A_IP.TXT', FileContentsBase64PartyA, function (error, response) {
+                    if (error) {
+                        console.log(error);
+                        return res.status(400).send(error);
+                    }
+                    var responseBody = JSON.parse(response.body);
+                    if (responseBody.message === "Bad credentials") {
+                        console.log(responseBody);
+                        return res.status(400).send(responseBody);
+                    }
+
+                    console.log(responseBody);
+                    console.log("GitHub Creating PARTY_A_IP/PARTY_A_IP.TXT Seems Successful.");
+
+                    // Now Create Party B Folder
+                    GitHubCreateFile(req.body, 'PARTY_B_IP/PARTY_B_IP.TXT', FileContentsBase64PartyB, function (error, response) {
+                        if (error) {
+                            console.log(error);
+                            return res.status(400).send(error);
+                        }
+                        var responseBody = JSON.parse(response.body);
+                        if (responseBody.message === "Bad credentials") {
+                            console.log(responseBody);
+                            return res.status(400).send(responseBody);
+                        }
+    
+                        console.log(responseBody);
+                        console.log("GitHub Creating PARTY_B_IP/PARTY_B_IP.TXT Seems Successful.");
+    
+                        // Now, in the nested h*** can we send back the res.send.
+
+                        res.send(responseBody);
+                    });
+                });
+            });
+        }
     });
 });
 
@@ -133,7 +191,6 @@ function GitHubFolderCreateRepo(data, callback) {
 }
 
 // https://api.github.com/repos/Sam1p/testrepo/contents/Party_A_IP/contents.txt
-
 // Create a File on a Repo
 function GitHubCreateFile(data, FilePathName, FileContentsBase64, callback) {
 
@@ -160,27 +217,6 @@ app.get('/api/GetGitHub', async (req, res) => {
     console.log("Received API call: ", JSON.stringify(req.body));
     console.log(req.body);
     console.log("Going to perform the typical GET for now");
-
-
-    // do a "get for now to test out, because you know GET works
-    // change to a POST after GET works
-    /* Ryan's working code
-    var request = require ('request');
-    var options = {
-        'method': 'GET,
-        'url': https://api.github.com/user/repos',
-        'headers': {
-            'Authorization': 'Basic' + Buffer.from("Sam1p.WelcomeEvery1").toString('base64),
-            'User-Agnet': 'PostmanRuntime/7.24.1'
-        }
-    }
-    request (options, function (error, response) {
-        if (error) throw new Error(error);
-        console.log(response.body);
-    }
-    */
-
-    // problem is still with 'Requires Authentication'
     var options = {
         'method': 'GET',
         'url': 'https://api.github.com/user/repos',
